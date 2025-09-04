@@ -165,7 +165,7 @@ export default function MinorPage() {
 
   return (
     <div className="relative min-h-screen overflow-x-hidden bg-gradient-to-b from-indigo-950 via-slate-900 to-slate-950 text-slate-100">
-  <NavBar active="home" />
+  {/* <NavBar active="home" /> */}
 
       <main className="mx-auto max-w-6xl px-4 pb-24 pt-14">
         {/* Title */}
