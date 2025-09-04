@@ -80,6 +80,8 @@ function SidebarButton({
 export default function MinorPage() {
   const [openModal, setOpenModal] = useState<null | "general">(null);
   const [sidebarVisible, setSidebarVisible] = useState(true);
+  const [expandedDepartment, setExpandedDepartment] = useState<string | null>(null);
+  const [showDepartments, setShowDepartments] = useState(false);
 
   const generalInfo = useMemo(
     () => (
@@ -215,15 +217,15 @@ export default function MinorPage() {
             </p>
           </button>
 
-          <a
+          {/* <a
             href="#departments"
             onClick={(e) => {
               e.preventDefault();
               scrollTo("departments");
             }}
             className="w-full rounded-2xl border border-white/10 bg-slate-800/60 px-5 py-4 text-left text-slate-100 shadow-lg ring-1 ring-white/10 transition hover:-translate-y-0.5 hover:bg-slate-800/80 hover:shadow-xl"
-          >
-            <div className="flex items-center justify-between">
+          > */}
+            {/* <div className="flex items-center justify-between">
               <span className="text-base font-semibold">Browse Departments</span>
               <svg
                 xmlns="http://www.w3.org/2000/svg"
@@ -233,37 +235,239 @@ export default function MinorPage() {
               >
                 <path d="M3.75 6.75A.75.75 0 0 1 4.5 6h15a.75.75 0 0 1 0 1.5h-15a.75.75 0 0 1-.75-.75Zm0 5.25A.75.75 0 0 1 4.5 11h15a.75.75 0 0 1 0 1.5h-15a.75.75 0 0 1-.75-.75Zm0 5.25a.75.75 0 0 1 .75-.75h15a.75.75 0 0 1 0 1.5h-15a.75.75 0 0 1-.75-.75Z" />
               </svg>
-            </div>
-            <p className="mt-1 text-sm text-slate-300">Find minor offerings across branches.</p>
-          </a>
+            </div> */}
+            {/* <p className="mt-1 text-sm text-slate-300">Find minor offerings across branches.</p> */}
+          {/* </a> */}
         </section>
 
-  {/* Departments grid (placeholder anchors to show structure) */}
+  {/* Departments dropdown section */}
         <section id="departments" className="mt-14">
           <h3 className="text-xl font-semibold">Departments</h3>
           <p className="mt-1 text-slate-300">
             Explore minors typically offered by various departments.
           </p>
 
-          <div className="mt-6 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-            {[
-              "Computer Science and Engineering",
-              "Electronics and Communication",
-              "Electrical and Electronics",
-              "Mechanical Engineering",
-              "Industrial and Systems Engineering",
-              "Applied Electronics & Instrumentation",
-            ].map((dept) => (
-              <div
-                key={dept}
-                className="rounded-2xl border border-white/10 bg-slate-900/40 p-5 shadow ring-1 ring-white/10"
-              >
-                <p className="font-medium text-slate-100">{dept}</p>
-                <p className="mt-1 text-sm text-slate-300">
-                  Sample electives and credit structure vary by academic year.
-                </p>
+          <div className="mt-6 space-y-4">
+            {/* Browse Departments Button */}
+            <button
+              onClick={() => setShowDepartments(!showDepartments)}
+              className="w-full rounded-2xl border border-blue-500/30 bg-slate-900/60 px-6 py-4 text-left text-slate-100 shadow-lg ring-1 ring-white/10 transition hover:bg-slate-900/80 flex items-center justify-between"
+            >
+              <div>
+                <span className="text-base font-semibold">Browse Departments</span>
+                <p className="mt-1 text-sm text-slate-300">Find minor offerings across branches.</p>
               </div>
-            ))}
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                viewBox="0 0 24 24"
+                fill="currentColor"
+                className={`size-5 text-slate-400 transition-transform ${showDepartments ? 'rotate-180' : ''}`}
+              >
+                <path d="M6.75 9.75a.75.75 0 0 1 1.06 0L12 13.94l4.19-4.19a.75.75 0 1 1 1.06 1.06l-4.72 4.72a.75.75 0 0 1-1.06 0L6.75 10.81a.75.75 0 0 1 0-1.06Z" />
+              </svg>
+            </button>
+
+            {/* Department List - Shows when Browse Departments is clicked */}
+            {showDepartments && (
+              <div className="ml-4 space-y-2">
+                {/* AEI Department */}
+                <div>
+                  <button
+                    onClick={() => setExpandedDepartment(expandedDepartment === 'aei' ? null : 'aei')}
+                    className="w-full rounded-xl border border-blue-500/30 bg-slate-800/40 px-4 py-3 text-left text-slate-100 shadow ring-1 ring-white/10 transition hover:bg-slate-800/60 flex items-center justify-between"
+                  >
+                    <span className="text-sm font-medium">Applied Electronics & Instrumentation (AEI)</span>
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      viewBox="0 0 24 24"
+                      fill="currentColor"
+                      className={`size-4 text-slate-400 transition-transform ${expandedDepartment === 'aei' ? 'rotate-180' : ''}`}
+                    >
+                      <path d="M6.75 9.75a.75.75 0 0 1 1.06 0L12 13.94l4.19-4.19a.75.75 0 1 1 1.06 1.06l-4.72 4.72a.75.75 0 0 1-1.06 0L6.75 10.81a.75.75 0 0 1 0-1.06Z" />
+                    </svg>
+                  </button>
+
+                  {/* Expanded content for AEI */}
+                  {expandedDepartment === 'aei' && (
+                    <div className="ml-6 mt-3">
+                      <div className="rounded-xl border border-white/10 bg-slate-900/40 p-4">
+                        <h4 className="text-lg font-semibold text-white mb-2">
+                          Minor in Applied Electronics and Instrumentation.
+                        </h4>
+                        <button className="rounded-xl border border-blue-500/30 bg-blue-600/10 px-4 py-2 text-sm font-medium text-blue-300 transition hover:bg-blue-600/20">
+                          View Curriculum
+                        </button>
+                      </div>
+                    </div>
+                  )}
+                </div>
+
+                {/* Computer Science and Engineering - Special case with two minors */}
+                <div>
+                  <button
+                    onClick={() => setExpandedDepartment(expandedDepartment === 'cse' ? null : 'cse')}
+                    className="w-full rounded-xl border border-blue-500/30 bg-slate-800/40 px-4 py-3 text-left text-slate-100 shadow ring-1 ring-white/10 transition hover:bg-slate-800/60 flex items-center justify-between"
+                  >
+                    <span className="text-sm font-medium">Computer Science and Engineering (CSE)</span>
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      viewBox="0 0 24 24"
+                      fill="currentColor"
+                      className={`size-4 text-slate-400 transition-transform ${expandedDepartment === 'cse' ? 'rotate-180' : ''}`}
+                    >
+                      <path d="M6.75 9.75a.75.75 0 0 1 1.06 0L12 13.94l4.19-4.19a.75.75 0 1 1 1.06 1.06l-4.72 4.72a.75.75 0 0 1-1.06 0L6.75 10.81a.75.75 0 0 1 0-1.06Z" />
+                    </svg>
+                  </button>
+
+                  {/* Expanded content for CSE - Two minor options */}
+                  {expandedDepartment === 'cse' && (
+                    <div className="ml-6 mt-3 space-y-3">
+                      <div className="rounded-xl border border-white/10 bg-slate-900/40 p-4">
+                        <h4 className="text-lg font-semibold text-white mb-2">
+                          Minor in Artificial Intelligence
+                        </h4>
+                        <button className="rounded-xl border border-blue-500/30 bg-blue-600/10 px-4 py-2 text-sm font-medium text-blue-300 transition hover:bg-blue-600/20">
+                          View Curriculum
+                        </button>
+                      </div>
+                      <div className="rounded-xl border border-white/10 bg-slate-900/40 p-4">
+                        <h4 className="text-lg font-semibold text-white mb-2">
+                          Minor in Computer Science
+                        </h4>
+                        <button className="rounded-xl border border-blue-500/30 bg-blue-600/10 px-4 py-2 text-sm font-medium text-blue-300 transition hover:bg-blue-600/20">
+                          View Curriculum
+                        </button>
+                      </div>
+                    </div>
+                  )}
+                </div>
+
+                {/* Other departments */}
+                {[
+                  { key: 'ece', name: 'Electronics and Communication (ECE)' },
+                  { key: 'ie', name: 'Industrial and Systems Engineering (IE)' },
+                ].map((dept) => (
+                  <div key={dept.key}>
+                    <button
+                      onClick={() => setExpandedDepartment(expandedDepartment === dept.key ? null : dept.key)}
+                      className="w-full rounded-xl border border-blue-500/30 bg-slate-800/40 px-4 py-3 text-left text-slate-100 shadow ring-1 ring-white/10 transition hover:bg-slate-800/60 flex items-center justify-between"
+                    >
+                      <span className="text-sm font-medium">{dept.name}</span>
+                      <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        viewBox="0 0 24 24"
+                        fill="currentColor"
+                        className={`size-4 text-slate-400 transition-transform ${expandedDepartment === dept.key ? 'rotate-180' : ''}`}
+                      >
+                        <path d="M6.75 9.75a.75.75 0 0 1 1.06 0L12 13.94l4.19-4.19a.75.75 0 1 1 1.06 1.06l-4.72 4.72a.75.75 0 0 1-1.06 0L6.75 10.81a.75.75 0 0 1 0-1.06Z" />
+                      </svg>
+                    </button>
+
+                    {/* Expanded content for other departments */}
+                    {expandedDepartment === dept.key && (
+                      <div className="ml-6 mt-3">
+                        <div className="rounded-xl border border-white/10 bg-slate-900/40 p-4">
+                          <h4 className="text-lg font-semibold text-white mb-2">
+                            Minor in {dept.name.split(' (')[0]}.
+                          </h4>
+                          <button className="rounded-xl border border-blue-500/30 bg-blue-600/10 px-4 py-2 text-sm font-medium text-blue-300 transition hover:bg-blue-600/20">
+                            View Curriculum
+                          </button>
+                        </div>
+                      </div>
+                    )}
+                  </div>
+                ))}
+
+                {/* Mechanical Engineering - Special case with two minors */}
+                <div>
+                  <button
+                    onClick={() => setExpandedDepartment(expandedDepartment === 'me' ? null : 'me')}
+                    className="w-full rounded-xl border border-blue-500/30 bg-slate-800/40 px-4 py-3 text-left text-slate-100 shadow ring-1 ring-white/10 transition hover:bg-slate-800/60 flex items-center justify-between"
+                  >
+                    <span className="text-sm font-medium">Mechanical Engineering (ME)</span>
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      viewBox="0 0 24 24"
+                      fill="currentColor"
+                      className={`size-4 text-slate-400 transition-transform ${expandedDepartment === 'me' ? 'rotate-180' : ''}`}
+                    >
+                      <path d="M6.75 9.75a.75.75 0 0 1 1.06 0L12 13.94l4.19-4.19a.75.75 0 1 1 1.06 1.06l-4.72 4.72a.75.75 0 0 1-1.06 0L6.75 10.81a.75.75 0 0 1 0-1.06Z" />
+                    </svg>
+                  </button>
+
+                  {/* Expanded content for ME - Two minor options */}
+                  {expandedDepartment === 'me' && (
+                    <div className="ml-6 mt-3 space-y-3">
+                      <div className="rounded-xl border border-white/10 bg-slate-900/40 p-4">
+                        <h4 className="text-lg font-semibold text-white mb-2">
+                          Minor in Financial Management
+                        </h4>
+                        <button className="rounded-xl border border-blue-500/30 bg-blue-600/10 px-4 py-2 text-sm font-medium text-blue-300 transition hover:bg-blue-600/20">
+                          View Curriculum
+                        </button>
+                      </div>
+                      <div className="rounded-xl border border-white/10 bg-slate-900/40 p-4">
+                        <h4 className="text-lg font-semibold text-white mb-2">
+                          Minor in Intelligent Systems Design Manufacturing
+                        </h4>
+                        <button className="rounded-xl border border-blue-500/30 bg-blue-600/10 px-4 py-2 text-sm font-medium text-blue-300 transition hover:bg-blue-600/20">
+                          View Curriculum
+                        </button>
+                      </div>
+                    </div>
+                  )}
+                </div>
+
+                {/* Electrical and Electronics Engineering - Special case with three minors */}
+                <div>
+                  <button
+                    onClick={() => setExpandedDepartment(expandedDepartment === 'eee' ? null : 'eee')}
+                    className="w-full rounded-xl border border-blue-500/30 bg-slate-800/40 px-4 py-3 text-left text-slate-100 shadow ring-1 ring-white/10 transition hover:bg-slate-800/60 flex items-center justify-between"
+                  >
+                    <span className="text-sm font-medium">Electrical and Electronics (EEE)</span>
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      viewBox="0 0 24 24"
+                      fill="currentColor"
+                      className={`size-4 text-slate-400 transition-transform ${expandedDepartment === 'eee' ? 'rotate-180' : ''}`}
+                    >
+                      <path d="M6.75 9.75a.75.75 0 0 1 1.06 0L12 13.94l4.19-4.19a.75.75 0 1 1 1.06 1.06l-4.72 4.72a.75.75 0 0 1-1.06 0L6.75 10.81a.75.75 0 0 1 0-1.06Z" />
+                    </svg>
+                  </button>
+
+                  {/* Expanded content for EEE - Three minor options */}
+                  {expandedDepartment === 'eee' && (
+                    <div className="ml-6 mt-3 space-y-3">
+                      <div className="rounded-xl border border-white/10 bg-slate-900/40 p-4">
+                        <h4 className="text-lg font-semibold text-white mb-2">
+                          Minor in Control Engineering
+                        </h4>
+                        <button className="rounded-xl border border-blue-500/30 bg-blue-600/10 px-4 py-2 text-sm font-medium text-blue-300 transition hover:bg-blue-600/20">
+                          View Curriculum
+                        </button>
+                      </div>
+                      <div className="rounded-xl border border-white/10 bg-slate-900/40 p-4">
+                        <h4 className="text-lg font-semibold text-white mb-2">
+                          Minor in Energy Engineering
+                        </h4>
+                        <button className="rounded-xl border border-blue-500/30 bg-blue-600/10 px-4 py-2 text-sm font-medium text-blue-300 transition hover:bg-blue-600/20">
+                          View Curriculum
+                        </button>
+                      </div>
+                      <div className="rounded-xl border border-white/10 bg-slate-900/40 p-4">
+                        <h4 className="text-lg font-semibold text-white mb-2">
+                          Minor in Power Converters & Drives
+                        </h4>
+                        <button className="rounded-xl border border-blue-500/30 bg-blue-600/10 px-4 py-2 text-sm font-medium text-blue-300 transition hover:bg-blue-600/20">
+                          View Curriculum
+                        </button>
+                      </div>
+                    </div>
+                  )}
+                </div>
+              </div>
+            )}
           </div>
         </section>
 
