@@ -159,6 +159,10 @@ export default function MinorPage() {
     if (el) el.scrollIntoView({ behavior: "smooth", block: "start" });
   };
 
+  const openPDF = (pdfPath: string) => {
+    window.open(pdfPath, '_blank');
+  };
+
   return (
     <div className="relative min-h-screen overflow-x-hidden bg-gradient-to-b from-indigo-950 via-slate-900 to-slate-950 text-slate-100">
   <NavBar active="home" />
@@ -294,7 +298,10 @@ export default function MinorPage() {
                         <h4 className="text-lg font-semibold text-white mb-2">
                           Minor in Applied Electronics and Instrumentation.
                         </h4>
-                        <button className="rounded-xl border border-blue-500/30 bg-blue-600/10 px-4 py-2 text-sm font-medium text-blue-300 transition hover:bg-blue-600/20">
+                        <button 
+                          onClick={() => openPDF('/pdfs/AEI/AE Applied Electronics and Instrumentation.pdf')}
+                          className="rounded-xl border border-blue-500/30 bg-blue-600/10 px-4 py-2 text-sm font-medium text-blue-300 transition hover:bg-blue-600/20"
+                        >
                           View Curriculum
                         </button>
                       </div>
@@ -326,7 +333,10 @@ export default function MinorPage() {
                         <h4 className="text-lg font-semibold text-white mb-2">
                           Minor in Artificial Intelligence
                         </h4>
-                        <button className="rounded-xl border border-blue-500/30 bg-blue-600/10 px-4 py-2 text-sm font-medium text-blue-300 transition hover:bg-blue-600/20">
+                        <button 
+                          onClick={() => openPDF('/pdfs/CSE/CS Artificial Intelligence.pdf')}
+                          className="rounded-xl border border-blue-500/30 bg-blue-600/10 px-4 py-2 text-sm font-medium text-blue-300 transition hover:bg-blue-600/20"
+                        >
                           View Curriculum
                         </button>
                       </div>
@@ -334,7 +344,10 @@ export default function MinorPage() {
                         <h4 className="text-lg font-semibold text-white mb-2">
                           Minor in Computer Science
                         </h4>
-                        <button className="rounded-xl border border-blue-500/30 bg-blue-600/10 px-4 py-2 text-sm font-medium text-blue-300 transition hover:bg-blue-600/20">
+                        <button 
+                          onClick={() => openPDF('/pdfs/CSE/CS Computer Science and Engineering.pdf')}
+                          className="rounded-xl border border-blue-500/30 bg-blue-600/10 px-4 py-2 text-sm font-medium text-blue-300 transition hover:bg-blue-600/20"
+                        >
                           View Curriculum
                         </button>
                       </div>
@@ -370,7 +383,16 @@ export default function MinorPage() {
                           <h4 className="text-lg font-semibold text-white mb-2">
                             Minor in {dept.name.split(' (')[0]}.
                           </h4>
-                          <button className="rounded-xl border border-blue-500/30 bg-blue-600/10 px-4 py-2 text-sm font-medium text-blue-300 transition hover:bg-blue-600/20">
+                          <button 
+                            onClick={() => {
+                              const pdfPaths = {
+                                'ece': '/pdfs/ECE/ECE Electronics and Communication Engg.pdf',
+                                'ie': '/pdfs/IE/IE Industrial and Systems Engineering.pdf'
+                              };
+                              openPDF(pdfPaths[dept.key as keyof typeof pdfPaths]);
+                            }}
+                            className="rounded-xl border border-blue-500/30 bg-blue-600/10 px-4 py-2 text-sm font-medium text-blue-300 transition hover:bg-blue-600/20"
+                          >
                             View Curriculum
                           </button>
                         </div>
@@ -403,7 +425,10 @@ export default function MinorPage() {
                         <h4 className="text-lg font-semibold text-white mb-2">
                           Minor in Financial Management
                         </h4>
-                        <button className="rounded-xl border border-blue-500/30 bg-blue-600/10 px-4 py-2 text-sm font-medium text-blue-300 transition hover:bg-blue-600/20">
+                        <button 
+                          onClick={() => openPDF('/pdfs/ME/ME Financial Management (Additional Offer).pdf')}
+                          className="rounded-xl border border-blue-500/30 bg-blue-600/10 px-4 py-2 text-sm font-medium text-blue-300 transition hover:bg-blue-600/20"
+                        >
                           View Curriculum
                         </button>
                       </div>
@@ -411,7 +436,10 @@ export default function MinorPage() {
                         <h4 className="text-lg font-semibold text-white mb-2">
                           Minor in Intelligent Systems Design Manufacturing
                         </h4>
-                        <button className="rounded-xl border border-blue-500/30 bg-blue-600/10 px-4 py-2 text-sm font-medium text-blue-300 transition hover:bg-blue-600/20">
+                        <button 
+                          onClick={() => openPDF('/pdfs/ME/ME Intelligent Systems Design Manufacturing.pdf')}
+                          className="rounded-xl border border-blue-500/30 bg-blue-600/10 px-4 py-2 text-sm font-medium text-blue-300 transition hover:bg-blue-600/20"
+                        >
                           View Curriculum
                         </button>
                       </div>
@@ -443,7 +471,10 @@ export default function MinorPage() {
                         <h4 className="text-lg font-semibold text-white mb-2">
                           Minor in Control Engineering
                         </h4>
-                        <button className="rounded-xl border border-blue-500/30 bg-blue-600/10 px-4 py-2 text-sm font-medium text-blue-300 transition hover:bg-blue-600/20">
+                        <button 
+                          onClick={() => openPDF('/pdfs/EEE/EEE Control Engineering.pdf')}
+                          className="rounded-xl border border-blue-500/30 bg-blue-600/10 px-4 py-2 text-sm font-medium text-blue-300 transition hover:bg-blue-600/20"
+                        >
                           View Curriculum
                         </button>
                       </div>
@@ -451,7 +482,10 @@ export default function MinorPage() {
                         <h4 className="text-lg font-semibold text-white mb-2">
                           Minor in Energy Engineering
                         </h4>
-                        <button className="rounded-xl border border-blue-500/30 bg-blue-600/10 px-4 py-2 text-sm font-medium text-blue-300 transition hover:bg-blue-600/20">
+                        <button 
+                          onClick={() => openPDF('/pdfs/EEE/EEE Energy Engineering.pdf')}
+                          className="rounded-xl border border-blue-500/30 bg-blue-600/10 px-4 py-2 text-sm font-medium text-blue-300 transition hover:bg-blue-600/20"
+                        >
                           View Curriculum
                         </button>
                       </div>
@@ -459,7 +493,10 @@ export default function MinorPage() {
                         <h4 className="text-lg font-semibold text-white mb-2">
                           Minor in Power Converters & Drives
                         </h4>
-                        <button className="rounded-xl border border-blue-500/30 bg-blue-600/10 px-4 py-2 text-sm font-medium text-blue-300 transition hover:bg-blue-600/20">
+                        <button 
+                          onClick={() => openPDF('/pdfs/EEE/EEE POWER CONVERTERS & DRIVES.pdf')}
+                          className="rounded-xl border border-blue-500/30 bg-blue-600/10 px-4 py-2 text-sm font-medium text-blue-300 transition hover:bg-blue-600/20"
+                        >
                           View Curriculum
                         </button>
                       </div>
