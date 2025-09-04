@@ -2,6 +2,7 @@
 
 import React, { useMemo, useState } from "react";
 import NavBar from "@/components/NavBar";
+import Sidebar, { type SidebarButton as SidebarButtonType } from "@/components/Sidebar";
 
 type ModalProps = {
   open: boolean;
@@ -55,31 +56,8 @@ function Modal({ open, title, onClose, children }: ModalProps) {
   );
 }
 
-function SidebarButton({
-  title,
-  onClick,
-  children,
-}: {
-  title: string;
-  onClick: () => void;
-  children: React.ReactNode;
-}) {
-  return (
-    <button
-      title={title}
-      aria-label={title}
-      onClick={onClick}
-      className="group rounded-xl p-2 text-blue-300 transition hover:bg-blue-500/15 hover:text-white"
-    >
-      <span className="sr-only">{title}</span>
-      <span className="block size-6">{children}</span>
-    </button>
-  );
-}
-
 export default function MinorPage() {
   const [openModal, setOpenModal] = useState<null | "general">(null);
-  const [sidebarVisible, setSidebarVisible] = useState(true);
   const [expandedDepartment, setExpandedDepartment] = useState<string | null>(null);
   const [showDepartments, setShowDepartments] = useState(false);
 
@@ -162,6 +140,72 @@ export default function MinorPage() {
   const openPDF = (pdfPath: string) => {
     window.open(pdfPath, '_blank');
   };
+
+  // Sidebar configuration
+  const sidebarButtons: SidebarButtonType[] = [
+    {
+      id: 'general-info',
+      title: 'General Info',
+      onClick: () => setOpenModal("general"),
+      icon: (
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="#3b82f6" className="size-6">
+          <path d="M4.5 5.25A2.25 2.25 0 0 1 6.75 3h10.5A2.25 2.25 0 0 1 19.5 5.25v13.5a.75.75 0 0 1-1.2.6l-1.8-1.35-1.8 1.35a.75.75 0 0 1-.9 0L12 18l-1.8 1.35a.75.75 0 0 1-.9 0L7.5 18l-1.8 1.35a.75.75 0 0 1-1.2-.6V5.25Z" />
+        </svg>
+      ),
+    },
+    {
+      id: 'overview',
+      title: 'Overview',
+      onClick: () => scrollTo("overview"),
+      icon: (
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="#3b82f6" className="size-6">
+          <path d="M12 6.75c-1.768-1.228-3.88-1.5-6-.75a.75.75 0 0 0-.5.71v9.03a.75.75 0 0 0 1.01.71c1.86-.62 3.71-.42 5.49.59.47.27 1.03.27 1.5 0 1.78-1.01 3.63-1.21 5.49-.59a.75.75 0 0 0 1.01-.71V6.71a.75.75 0 0 0-.5-.71c-2.12-.75-4.23-.48-6 .75Z" />
+        </svg>
+      ),
+    },
+    {
+      id: 'credits',
+      title: 'Credits',
+      onClick: () => scrollTo("credits"),
+      icon: (
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="#3b82f6" className="size-6">
+          <path d="M19.5 3.75h-9A2.25 2.25 0 0 0 8.25 6v12A2.25 2.25 0 0 0 10.5 20.25h9A2.25 2.25 0 0 0 21.75 18V6A2.25 2.25 0 0 0 19.5 3.75Z" />
+          <path d="M3.75 6.75A.75.75 0 0 1 4.5 6h3a.75.75 0 0 1 0 1.5h-3a.75.75 0 0 1-.75-.75Zm0 3A.75.75 0 0 1 4.5 9h3a.75.75 0 0 1 0 1.5h-3a.75.75 0 0 1-.75-.75Z" />
+        </svg>
+      ),
+    },
+    {
+      id: 'departments',
+      title: 'Departments',
+      onClick: () => scrollTo("departments"),
+      icon: (
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="#3b82f6" className="size-6">
+          <path d="M3 6.75A.75.75 0 0 1 3.75 6h16.5a.75.75 0 0 1 0 1.5H3.75A.75.75 0 0 1 3 6.75Zm0 5.25a.75.75 0 0 1 .75-.75h16.5a.75.75 0 0 1 0 1.5H3.75a.75.75 0 0 1-.75-.75Zm0 5.25a.75.75 0 0 1 .75-.75h16.5a.75.75 0 0 1 0 1.5H3.75a.75.75 0 0 1-.75-.75Z" />
+        </svg>
+      ),
+    },
+    {
+      id: 'allotment',
+      title: 'Allotment',
+      onClick: () => scrollTo("allotment"),
+      icon: (
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="#3b82f6" className="size-6">
+          <path d="M15.75 8.25a3.75 3.75 0 1 1-7.5 0 3.75 3.75 0 0 1 7.5 0Z" />
+          <path d="M1.5 20.25a9 9 0 1 1 21 0v.75H1.5v-.75Z" />
+        </svg>
+      ),
+    },
+    {
+      id: 'home',
+      title: 'Home',
+      onClick: () => (window.location.href = "/"),
+      icon: (
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="#3b82f6" className="size-6">
+          <path d="M12 3 1.5 9l10.5 6 9-5.143V18h1.5V9L12 3Z" />
+        </svg>
+      ),
+    },
+  ];
 
   return (
     <div className="relative min-h-screen overflow-x-hidden bg-gradient-to-b from-indigo-950 via-slate-900 to-slate-950 text-slate-100">
@@ -650,80 +694,8 @@ export default function MinorPage() {
         </div>
       </footer>
 
-      {/* Floating sidebar rail + up/down buttons */}
-      {/* Top button: Down arrow to hide menu (visible only when sidebar is visible) */}
-      {sidebarVisible && (
-        <button
-          onClick={() => setSidebarVisible(false)}
-          title="Hide menu"
-          aria-label="Hide menu"
-          className="fixed right-5 top-24 z-40 rounded-full bg-slate-900/80 p-3 text-blue-400 shadow-lg ring-1 ring-white/10 transition hover:bg-slate-900/90 hover:text-blue-300"
-        >
-          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className="size-5">
-            <path d="M12 4.5a.75.75 0 0 1 .75.75v11.69l3.72-3.72a.75.75 0 1 1 1.06 1.06l-5 5a.75.75 0 0 1-1.06 0l-5-5a.75.75 0 0 1 1.06-1.06l3.72 3.72V5.25A.75.75 0 0 1 12 4.5Z" />
-          </svg>
-        </button>
-      )}
-
-  {/* Vertical rail */}
-  {sidebarVisible && (
-  <aside className="fixed right-4 top-1/2 z-40 -translate-y-1/2">
-        <div className="flex flex-col items-center gap-3 rounded-[1.5rem] bg-slate-900/80 p-3 ring-1 ring-white/10 shadow-2xl">
-          {/* Book - General Info modal */}
-          <SidebarButton title="General Info" onClick={() => setOpenModal("general")}>
-            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="#3b82f6" className="size-6">
-              <path d="M4.5 5.25A2.25 2.25 0 0 1 6.75 3h10.5A2.25 2.25 0 0 1 19.5 5.25v13.5a.75.75 0 0 1-1.2.6l-1.8-1.35-1.8 1.35a.75.75 0 0 1-.9 0L12 18l-1.8 1.35a.75.75 0 0 1-.9 0L7.5 18l-1.8 1.35a.75.75 0 0 1-1.2-.6V5.25Z" />
-            </svg>
-          </SidebarButton>
-          {/* Book Open - Overview */}
-          <SidebarButton title="Overview" onClick={() => scrollTo("overview")}>
-            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="#3b82f6" className="size-6">
-              <path d="M12 6.75c-1.768-1.228-3.88-1.5-6-.75a.75.75 0 0 0-.5.71v9.03a.75.75 0 0 0 1.01.71c1.86-.62 3.71-.42 5.49.59.47.27 1.03.27 1.5 0 1.78-1.01 3.63-1.21 5.49-.59a.75.75 0 0 0 1.01-.71V6.71a.75.75 0 0 0-.5-.71c-2.12-.75-4.23-.48-6 .75Z" />
-            </svg>
-          </SidebarButton>
-          {/* Document - Credits */}
-          <SidebarButton title="Credits" onClick={() => scrollTo("credits")}>
-            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="#3b82f6" className="size-6">
-              <path d="M19.5 3.75h-9A2.25 2.25 0 0 0 8.25 6v12A2.25 2.25 0 0 0 10.5 20.25h9A2.25 2.25 0 0 0 21.75 18V6A2.25 2.25 0 0 0 19.5 3.75Z" />
-              <path d="M3.75 6.75A.75.75 0 0 1 4.5 6h3a.75.75 0 0 1 0 1.5h-3a.75.75 0 0 1-.75-.75Zm0 3A.75.75 0 0 1 4.5 9h3a.75.75 0 0 1 0 1.5h-3a.75.75 0 0 1-.75-.75Z" />
-            </svg>
-          </SidebarButton>
-          {/* List - Departments */}
-          <SidebarButton title="Departments" onClick={() => scrollTo("departments")}>
-            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="#3b82f6" className="size-6">
-              <path d="M3 6.75A.75.75 0 0 1 3.75 6h16.5a.75.75 0 0 1 0 1.5H3.75A.75.75 0 0 1 3 6.75Zm0 5.25a.75.75 0 0 1 .75-.75h16.5a.75.75 0 0 1 0 1.5H3.75a.75.75 0 0 1-.75-.75Zm0 5.25a.75.75 0 0 1 .75-.75h16.5a.75.75 0 0 1 0 1.5H3.75a.75.75 0 0 1-.75-.75Z" />
-            </svg>
-          </SidebarButton>
-          {/* User Graduate - Allotment */}
-          <SidebarButton title="Allotment" onClick={() => scrollTo("allotment")}>
-            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="#3b82f6" className="size-6">
-              <path d="M15.75 8.25a3.75 3.75 0 1 1-7.5 0 3.75 3.75 0 0 1 7.5 0Z" />
-              <path d="M1.5 20.25a9 9 0 1 1 21 0v.75H1.5v-.75Z" />
-            </svg>
-          </SidebarButton>
-          {/* Academic Cap - Home or Info */}
-          <SidebarButton title="Home" onClick={() => (window.location.href = "/") }>
-            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="#3b82f6" className="size-6">
-              <path d="M12 3 1.5 9l10.5 6 9-5.143V18h1.5V9L12 3Z" />
-            </svg>
-          </SidebarButton>
-        </div>
-      </aside>
-  )}
-
-      {/* Bottom button: Up arrow to restore menu (visible only when sidebar is hidden) */}
-      {!sidebarVisible && (
-        <button
-          onClick={() => setSidebarVisible(true)}
-          title="Show menu"
-          aria-label="Show menu"
-          className="fixed bottom-6 right-5 z-40 rounded-full bg-slate-900/80 p-3 text-blue-400 shadow-lg ring-1 ring-white/10 transition hover:bg-slate-900/90 hover:text-blue-300"
-        >
-          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className="size-5">
-            <path d="M12 19.5a.75.75 0 0 1-.75-.75V7.06l-3.72 3.72a.75.75 0 1 1-1.06-1.06l5-5a.75.75 0 0 1 1.06 0l5 5a.75.75 0 1 1-1.06 1.06l-3.72-3.72v11.69a.75.75 0 0 1-.75.75Z" />
-          </svg>
-        </button>
-      )}
+      {/* Floating sidebar */}
+      <Sidebar buttons={sidebarButtons} />
 
       {/* Modal instances */}
       <Modal
